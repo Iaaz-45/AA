@@ -14,11 +14,11 @@ func _on_timer_timeout():
 	
 	bullet.position.x = 48
 	if rotation_d == 0:
-		bullet.velocity.x = -speed
+		bullet.velocity.x = speed
 	elif rotation_d == 90:
 		bullet.velocity.y = speed
 	elif rotation_d == -90:
-		bullet.velocity.y = speed
+		bullet.velocity.y = -speed
 	elif rotation_d == 180:
 		bullet.velocity.x = -speed
 		

@@ -13,6 +13,9 @@ var fast_fall_enabled = false
 var max_jumps = 2  # Number of jumps allowed
 var jump_scale = false
 
+func _ready():
+	$AnimatedSprite2D.play("default")
+
 func _physics_process(delta):
 	velocity.y += gravity * delta
 	var dir = Input.get_axis("move_left", "move_right")
@@ -31,9 +34,11 @@ func movement(delta, dir):
 		velocity.x = lerp(velocity.x, dir * speed, acceleration * delta)
 		scale = lerp(scale, Vector2(0.9, 0.7), scale_speed * delta)
 		if dir > 0:
-			camera.offset.x = lerp(camera.offset.x, 125.0, 2.5 * delta)
+#			camera.offset.x = lerp(camera.offset.x, 125.0, 2.5 * delta)
+			$AnimatedSprite2D.flip_h = false
 		elif dir < 0:
-			camera.offset.x = lerp(camera.offset.x, -125.0, 2.5 * delta)
+#			camera.offset.x = lerp(camera.offset.x, -125.0, 2.5 * delta)
+			$AnimatedSprite2D.flip_h = true
 	else:
 		velocity.x = lerp(velocity.x, 0.0, friction * delta)
 		scale = lerp(scale, Vector2(0.8, 0.8), scale_speed * delta)
@@ -45,6 +50,8 @@ func movement(delta, dir):
 
 	if Input.is_action_just_pressed("jump") and max_jumps > 0:
 		velocity.y = jump_speed
+		if velocity.y < 0:
+			$AnimationPlayer.play("camera_shake")
 		jump_scale = true
 		max_jumps -= 1
 		
@@ -60,11 +67,13 @@ func movement(delta, dir):
 	if fast_fall_enabled:
 		# Apply faster fall speed if the fast fall button is pressed
 		velocity.y += fast_fall_speed * delta
+		$AnimationPlayer.play("camera_shake")
 		scale = lerp(scale, Vector2(0.5, 1.2), 50 * delta)
 	
 func particle_emit():
-	if velocity.x or velocity.y != 0:
+	if velocity != Vector2.ZERO:
 		particles.emitting = true
+		print("true")
 	else:
 		particles.emitting = false
 	

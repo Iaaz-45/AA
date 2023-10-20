@@ -90,5 +90,4 @@ layer_0/tile_data = PackedInt32Array(65520, 0, 0, 65521, 0, 0, 65522, 0, 0, 6552
 [node name="player" parent="." instance=ExtResource("2_0ps63")]
 
 [node name="Wall_enemy" parent="." instance=ExtResource("3_ikdda")]
-position = Vector2(928, -160)
-rotate = 180
+position = Vector2(-928, -96)
