@@ -52,6 +52,8 @@ func movement(delta, dir):
 		velocity.y = jump_speed
 		if velocity.y < 0:
 			$AnimationPlayer.play("camera_shake")
+			$AudioStreamPlayer.pitch_scale = 2
+			$AudioStreamPlayer.playing = true
 		jump_scale = true
 		max_jumps -= 1
 		
@@ -68,6 +70,8 @@ func movement(delta, dir):
 		# Apply faster fall speed if the fast fall button is pressed
 		velocity.y += fast_fall_speed * delta
 		$AnimationPlayer.play("camera_shake")
+		$AudioStreamPlayer.pitch_scale = 3
+		$AudioStreamPlayer.playing = true
 		scale = lerp(scale, Vector2(0.5, 1.2), 50 * delta)
 	
 func particle_emit():
