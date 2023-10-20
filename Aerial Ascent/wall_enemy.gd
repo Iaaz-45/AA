@@ -22,6 +22,5 @@ func _on_timer_timeout():
 	elif rotation_d == 180:
 		bullet.velocity.x = -speed
 		
-	print(global_rotation_degrees)
 
 

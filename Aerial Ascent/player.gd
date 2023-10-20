@@ -23,6 +23,9 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	
+	if Input.is_action_just_pressed("ui_cancel"):
+		get_tree().quit()
+	
 func movement(delta, dir):
 	if dir != 0:
 		velocity.x = lerp(velocity.x, dir * speed, acceleration * delta)
