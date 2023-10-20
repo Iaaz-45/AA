@@ -17,6 +17,13 @@ func _physics_process(delta):
 	velocity.y += gravity * delta
 	var dir = Input.get_axis("move_left", "move_right")
 	
+	movement(delta, dir)
+	
+	particle_emit()
+	
+	move_and_slide()
+	
+func movement(delta, dir):
 	if dir != 0:
 		velocity.x = lerp(velocity.x, dir * speed, acceleration * delta)
 		scale = lerp(scale, Vector2(0.9, 0.7), scale_speed * delta)
@@ -51,14 +58,10 @@ func _physics_process(delta):
 		# Apply faster fall speed if the fast fall button is pressed
 		velocity.y += fast_fall_speed * delta
 		scale = lerp(scale, Vector2(0.5, 1.2), 50 * delta)
-		
+	
+func particle_emit():
 	if velocity.x or velocity.y != 0:
 		particles.emitting = true
 	else:
 		particles.emitting = false
 	
-#	print(camera.offset.x)
-	
-	move_and_slide()
-
-
