@@ -13,16 +13,13 @@ var fast_fall_enabled = false
 var max_jumps = 2  # Number of jumps allowed
 var jump_scale = false
 
-func _ready():
-	$AnimatedSprite2D.play("default")
-
 func _physics_process(delta):
 	velocity.y += gravity * delta
 	var dir = Input.get_axis("move_left", "move_right")
 	
 	movement(delta, dir)
 	
-	particle_emit()
+	walking_particle_emit(dir)
 	
 	move_and_slide()
 	
@@ -35,10 +32,10 @@ func movement(delta, dir):
 		scale = lerp(scale, Vector2(0.9, 0.7), scale_speed * delta)
 		if dir > 0:
 #			camera.offset.x = lerp(camera.offset.x, 125.0, 2.5 * delta)
-			$AnimatedSprite2D.flip_h = false
+			$Sprite2D.flip_h = false
 		elif dir < 0:
 #			camera.offset.x = lerp(camera.offset.x, -125.0, 2.5 * delta)
-			$AnimatedSprite2D.flip_h = true
+			$Sprite2D.flip_h = true
 	else:
 		velocity.x = lerp(velocity.x, 0.0, friction * delta)
 		scale = lerp(scale, Vector2(0.8, 0.8), scale_speed * delta)
@@ -47,12 +44,14 @@ func movement(delta, dir):
 	if is_on_floor():
 		max_jumps = 2  # Reset jumps when touching the ground
 		jump_scale = false
+		$Jump_particles.emitting = false
 
 	if Input.is_action_just_pressed("jump") and max_jumps > 0:
 		velocity.y = jump_speed
+		$Jump_particles.emitting = true
+		$Timer.start()
 		if velocity.y < 0:
-			$AnimationPlayer.play("camera_shake")
-			$AudioStreamPlayer.pitch_scale = 2
+			$AudioStreamPlayer.pitch_scale = 0.75
 			$AudioStreamPlayer.playing = true
 		jump_scale = true
 		max_jumps -= 1
@@ -69,15 +68,19 @@ func movement(delta, dir):
 	if fast_fall_enabled:
 		# Apply faster fall speed if the fast fall button is pressed
 		velocity.y += fast_fall_speed * delta
-		$AnimationPlayer.play("camera_shake")
-		$AudioStreamPlayer.pitch_scale = 3
+		$Jump_particles.emitting = true
+		$Timer.start()
+		$AudioStreamPlayer.pitch_scale = 1.5
 		$AudioStreamPlayer.playing = true
 		scale = lerp(scale, Vector2(0.5, 1.2), 50 * delta)
 	
-func particle_emit():
-	if velocity != Vector2.ZERO:
+func walking_particle_emit(dir):
+	if dir != 0 and is_on_floor():
 		particles.emitting = true
-		print("true")
-	else:
+	elif dir < 1:
+		particles.emitting = false
+	elif dir > -1:
 		particles.emitting = false
 	
+func _on_timer_timeout():
+	$Jump_particles.emitting = false
