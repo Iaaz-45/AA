@@ -6,6 +6,9 @@ extends StaticBody2D
 var speed = 2000
 var BULLET = preload("res://scenes/bullet.tscn")
 
+func _ready():
+	$Timer.start()
+
 func _on_timer_timeout():
 	$AnimationPlayer.play("shoot")
 	$AudioStreamPlayer2D.playing = true
@@ -16,13 +19,13 @@ func _on_timer_timeout():
 	global_rotation_degrees = rotate
 	
 	bullet.position.x = 48
-	if rotation_d == 0:
+	if rotate == 0:
 		bullet.velocity.x = speed
-	elif rotation_d == 90:
+	elif rotate == 90:
 		bullet.velocity.y = speed
-	elif rotation_d == -90:
+	elif rotate == -90:
 		bullet.velocity.y = -speed
-	elif rotation_d == 180:
+	elif rotate == 180:
 		bullet.velocity.x = -speed
 		
 
