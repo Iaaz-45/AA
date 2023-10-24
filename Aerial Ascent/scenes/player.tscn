@@ -5,6 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://c2qviq5jvit4b" path="res://sprites/playerSprite.png" id="3_k38q7"]
 [ext_resource type="AudioStream" uid="uid://bsxcjfo1jjpak" path="res://sound_effects/mixkit-player-jumping-in-a-video-game-2043.wav" id="4_qgaik"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q8iue"]
+size = Vector2(40, 60)
+
 [sub_resource type="Gradient" id="Gradient_br0sb"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
@@ -34,18 +37,12 @@ sub_emitter_mode = 2
 sub_emitter_amount_at_end = 5
 collision_use_scale = true
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_q8iue"]
-size = Vector2(40, 60)
-
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("2")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(-22.5, -60)
-energy = 0.25
-shadow_enabled = true
-texture = ExtResource("3_55p0d")
-texture_scale = 7.5
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_q8iue")
 
 [node name="Particles" type="GPUParticles2D" parent="."]
 position = Vector2(0, 16.25)
@@ -71,6 +68,14 @@ position_smoothing_enabled = true
 scale = Vector2(4, 4)
 texture = ExtResource("3_k38q7")
 
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-8, -6)
+color = Color(0.788235, 0.85098, 1, 0.639216)
+energy = 0.2
+shadow_enabled = true
+texture = ExtResource("3_55p0d")
+texture_scale = 5.0
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_qgaik")
 volume_db = -10.0
@@ -78,9 +83,5 @@ pitch_scale = 0.75
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2)
-shape = SubResource("RectangleShape2D_q8iue")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

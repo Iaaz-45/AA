@@ -71,8 +71,8 @@ speed_scale = 2.0
 shape = SubResource("CircleShape2D_hh4e2")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-color = Color(1, 0.541176, 0.541176, 1)
-energy = 2.0
+color = Color(1, 0.839216, 0.831373, 1)
+energy = 0.5
 texture = ExtResource("3_rbspb")
 texture_scale = 0.5
 

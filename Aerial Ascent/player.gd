@@ -29,7 +29,7 @@ func _physics_process(delta):
 func movement(delta, dir):
 	if dir != 0:
 		velocity.x = lerp(velocity.x, dir * speed, acceleration * delta)
-#		$Sprite2D.scale = lerp($Sprite2D.scale, Vector2(4.6, 3.4), scale_speed * delta)
+		$Sprite2D.scale = lerp($Sprite2D.scale, Vector2(4.6, 3.4), scale_speed * delta)
 		if dir > 0:
 #			camera.offset.x = lerp(camera.offset.x, 125.0, 2.5 * delta)
 			$Sprite2D.flip_h = false
@@ -38,7 +38,7 @@ func movement(delta, dir):
 			$Sprite2D.flip_h = true
 	else:
 		velocity.x = lerp(velocity.x, 0.0, friction * delta)
-#		$Sprite2D.scale = lerp($Sprite2D.scale, Vector2(4, 4), scale_speed * delta)
+		$Sprite2D.scale = lerp($Sprite2D.scale, Vector2(4, 4), scale_speed * delta)
 		camera.offset.x = lerp(camera.offset.x, 0.0, 3 * delta)
 	
 	if is_on_floor():
@@ -57,8 +57,8 @@ func movement(delta, dir):
 		jump_scale = true
 		max_jumps -= 1
 		
-#	if jump_scale:
-#		$Sprite2D.scale = lerp($Sprite2D.scale, Vector2(3, 5), scale_speed * delta)
+	if jump_scale:
+		$Sprite2D.scale = lerp($Sprite2D.scale, Vector2(3, 5), scale_speed * delta)
 		
 	#	# Check for fast fall button input
 	if Input.is_action_just_pressed("fast_fall") and not is_on_floor():
@@ -73,7 +73,7 @@ func movement(delta, dir):
 		$Timer.start()
 		$AudioStreamPlayer.pitch_scale = 1.5
 		$AudioStreamPlayer.playing = true
-#		$Sprite2D.scale = lerp($Camera2D.scale, Vector2(2.5, 5.5), 50 * delta)
+		$Sprite2D.scale = lerp($Camera2D.scale, Vector2(2.5, 5.5), 50 * delta)
 	
 func walking_particle_emit(dir):
 	if dir != 0 and is_on_floor():
