@@ -1,12 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://eomy1mrhwxdk"]
+[gd_scene load_steps=10 format=3 uid="uid://eomy1mrhwxdk"]
 
 [ext_resource type="Script" path="res://player.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://b678povykvn0y" path="res://sprites/light.png" id="3_55p0d"]
 [ext_resource type="Texture2D" uid="uid://c2qviq5jvit4b" path="res://sprites/playerSprite.png" id="3_k38q7"]
 [ext_resource type="AudioStream" uid="uid://bsxcjfo1jjpak" path="res://sound_effects/mixkit-player-jumping-in-a-video-game-2043.wav" id="4_qgaik"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_q8iue"]
-size = Vector2(40, 60)
 
 [sub_resource type="Gradient" id="Gradient_br0sb"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -39,10 +36,6 @@ collision_use_scale = true
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("2")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 2)
-shape = SubResource("RectangleShape2D_q8iue")
 
 [node name="Particles" type="GPUParticles2D" parent="."]
 position = Vector2(0, 16.25)
@@ -83,5 +76,8 @@ pitch_scale = 0.75
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-12, -32, 12, -32, 32, -12, 32, 12, 12, 32, -12, 32, -32, 12, -32, -12)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
