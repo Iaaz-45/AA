@@ -1,11 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://dxffd3658e1vs"]
+[gd_scene load_steps=10 format=3 uid="uid://dxffd3658e1vs"]
 
 [ext_resource type="PackedScene" uid="uid://eomy1mrhwxdk" path="res://scenes/player.tscn" id="1_0odel"]
 [ext_resource type="Script" path="res://scenes/levels/level_1.gd" id="1_vujho"]
 [ext_resource type="PackedScene" uid="uid://dhlelys1in5sr" path="res://scenes/ground.tscn" id="2_202xd"]
 [ext_resource type="Texture2D" uid="uid://b678povykvn0y" path="res://sprites/light.png" id="3_ohm1o"]
 [ext_resource type="Texture2D" uid="uid://guwm4ccmfotw" path="res://sprites/door.png" id="4_0pgkp"]
-[ext_resource type="Texture2D" uid="uid://bg4nwg6nvg7ke" path="res://sprites/torch.png" id="6_fnodp"]
+[ext_resource type="PackedScene" uid="uid://dj8g8pwq7h60t" path="res://scenes/end.tscn" id="4_3lrd4"]
+[ext_resource type="PackedScene" uid="uid://ci32w674e04te" path="res://scenes/torch.tscn" id="6_xp0k4"]
+[ext_resource type="PackedScene" uid="uid://b1g6juixiy131" path="res://scenes/eyes/end_eye.tscn" id="7_3t54y"]
 
 [sub_resource type="Environment" id="Environment_gq0qp"]
 background_mode = 3
@@ -46,18 +48,8 @@ color = Color(1, 0.619608, 0.380392, 0.615686)
 shadow_enabled = true
 texture = ExtResource("3_ohm1o")
 
-[node name="End" type="Node2D" parent="."]
-position = Vector2(1024, -1488)
-
-[node name="Door" type="Sprite2D" parent="End"]
-scale = Vector2(6, 6)
-texture = ExtResource("4_0pgkp")
-
-[node name="doorknob_light" type="PointLight2D" parent="End"]
-position = Vector2(32, 8)
-color = Color(1, 0.619608, 0.380392, 0.615686)
-shadow_enabled = true
-texture = ExtResource("3_ohm1o")
+[node name="End" parent="." instance=ExtResource("4_3lrd4")]
+position = Vector2(1024, -1496)
 
 [node name="player" parent="." instance=ExtResource("1_0odel")]
 
@@ -66,14 +58,19 @@ layer_0/tile_data = PackedInt32Array(524299, 589825, 3, 458763, 589825, 2, 39322
 
 [node name="lights" type="Node2D" parent="."]
 
-[node name="torch" type="Sprite2D" parent="lights"]
-position = Vector2(-720, -184)
-scale = Vector2(4, 4)
-texture = ExtResource("6_fnodp")
+[node name="torch" parent="lights" instance=ExtResource("6_xp0k4")]
+position = Vector2(1136, -96)
 
-[node name="PointLight2D" type="PointLight2D" parent="lights/torch"]
-position = Vector2(-2, -8)
-color = Color(1, 1, 0.686275, 1)
-energy = 0.25
-shadow_enabled = true
-texture = ExtResource("3_ohm1o")
+[node name="torch2" parent="lights" instance=ExtResource("6_xp0k4")]
+position = Vector2(1072, -928)
+
+[node name="torch3" parent="lights" instance=ExtResource("6_xp0k4")]
+position = Vector2(-1136, -928)
+
+[node name="eyes" type="Node2D" parent="."]
+
+[node name="end_eye" parent="eyes" instance=ExtResource("7_3t54y")]
+position = Vector2(-888, -256)
+
+[connection signal="open_door" from="." to="End" method="_on_level_1_open_door"]
+[connection signal="can_exit" from="eyes/end_eye" to="." method="_on_end_eye_can_exit"]

@@ -12,6 +12,7 @@ var fast_fall_enabled = false
 @onready var camera = $Camera2D
 var max_jumps = 2  # Number of jumps allowed
 var jump_scale = false
+var exit = false
 
 func _physics_process(delta):
 	velocity.y += gravity * delta
@@ -25,6 +26,14 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
+		
+	if Input.is_action_just_pressed("use"):
+		exit = true
+	else:
+		exit = false
+	
+	if exit:
+		print("yes")
 	
 func movement(delta, dir):
 	if dir != 0:

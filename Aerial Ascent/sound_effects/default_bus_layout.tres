@@ -1,17 +1,26 @@
-[gd_resource type="AudioBusLayout" load_steps=4 format=3 uid="uid://bentl4njxm1v4"]
+[gd_resource type="AudioBusLayout" load_steps=5 format=3 uid="uid://bentl4njxm1v4"]
 
 [sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_2q22l"]
 resource_name = "Amplify"
-volume_db = 10.0
 
 [sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_mib0h"]
 resource_name = "PitchShift"
-pitch_scale = 2.0
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_axd8x"]
 resource_name = "Reverb"
 room_size = 1.0
-wet = 0.0
+damping = 0.44
+spread = 0.0
+hipass = 0.23
+dry = 0.55
+wet = 0.19
+
+[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_hw0tn"]
+resource_name = "Phaser"
+range_min_hz = 2780.0
+range_max_hz = 4930.11
+rate_hz = 8.424
+depth = 4.0
 
 [resource]
 bus/0/solo = true
@@ -22,3 +31,5 @@ bus/0/effect/1/effect = SubResource("AudioEffectPitchShift_mib0h")
 bus/0/effect/1/enabled = false
 bus/0/effect/2/effect = SubResource("AudioEffectReverb_axd8x")
 bus/0/effect/2/enabled = false
+bus/0/effect/3/effect = SubResource("AudioEffectPhaser_hw0tn")
+bus/0/effect/3/enabled = false

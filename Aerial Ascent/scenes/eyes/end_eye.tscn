@@ -1,0 +1,177 @@
+[gd_scene load_steps=16 format=3 uid="uid://b1g6juixiy131"]
+
+[ext_resource type="Script" path="res://scenes/eyes/end_eye.gd" id="1_d5yuy"]
+[ext_resource type="Texture2D" uid="uid://82b6afdgkm4u" path="res://sprites/EndKey_sprite.png" id="1_f0aao"]
+[ext_resource type="Texture2D" uid="uid://b678povykvn0y" path="res://sprites/light.png" id="2_ms6cu"]
+[ext_resource type="AudioStream" uid="uid://cgc3qxmdwydix" path="res://sound_effects/wind-chimes-bells-115747.mp3" id="4_gp8y2"]
+
+[sub_resource type="Curve" id="Curve_qvu5u"]
+max_value = 10.0
+_data = [Vector2(0.0060241, 4.52632), 0.0, 0.0, 0, 0, Vector2(0.99999, 3.89474), 0.0, 0.0, 0, 0, Vector2(1, 26.5263), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_t01ku"]
+curve = SubResource("Curve_qvu5u")
+
+[sub_resource type="Gradient" id="Gradient_121pn"]
+colors = PackedColorArray(1, 1, 1, 0.694118, 0.682353, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_db5a5"]
+gradient = SubResource("Gradient_121pn")
+
+[sub_resource type="Curve" id="Curve_uv14b"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.357895), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_pmmy8"]
+curve = SubResource("Curve_uv14b")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pgka4"]
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 20, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 50.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+angle_max = 196.9
+angle_curve = SubResource("CurveTexture_t01ku")
+scale_max = 15.0
+scale_curve = SubResource("CurveTexture_pmmy8")
+color = Color(0.768627, 0.976471, 1, 1)
+color_ramp = SubResource("GradientTexture1D_db5a5")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kcx2h"]
+
+[sub_resource type="Animation" id="Animation_f6f4o"]
+resource_name = "new_animation"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(-2, 2, -2),
+"update": 0,
+"values": [Vector2(0, 10), Vector2(0, -10), Vector2(0, 10)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector2(0, 10), Vector2(0, -10), Vector2(0, 10)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(-2, -2, -2),
+"update": 0,
+"values": [Vector2(0, 10), Vector2(0, -10), Vector2(0, 10)]
+}
+
+[sub_resource type="Animation" id="Animation_geij3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ts3kk"]
+_data = {
+"RESET": SubResource("Animation_geij3"),
+"new_animation": SubResource("Animation_f6f4o")
+}
+
+[node name="end_eye" type="Area2D"]
+position = Vector2(0, -9.1)
+script = ExtResource("1_d5yuy")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 25
+process_material = SubResource("ParticleProcessMaterial_pgka4")
+speed_scale = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2, 2)
+shape = SubResource("CircleShape2D_kcx2h")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_f0aao")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-4, -11)
+color = Color(0.447059, 1, 1, 0.403922)
+texture = ExtResource("2_ms6cu")
+texture_scale = 2.0
+
+[node name="PointLight2D2" type="PointLight2D" parent="PointLight2D"]
+position = Vector2(3, 4.1)
+color = Color(0, 0.54902, 0.866667, 1)
+energy = 0.5
+texture = ExtResource("2_ms6cu")
+offset = Vector2(0, 1.0305)
+texture_scale = 0.5
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_gp8y2")
+volume_db = -1.0
+pitch_scale = 2.0
+autoplay = true
+max_distance = 600.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "new_animation"
+speed_scale = 2.0
+libraries = {
+"": SubResource("AnimationLibrary_ts3kk")
+}
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
